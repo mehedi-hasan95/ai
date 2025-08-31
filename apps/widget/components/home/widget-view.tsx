@@ -1,23 +1,30 @@
 "use client";
 import { useAtomValue } from "jotai";
-import { WidgetHeader } from "./widget-header";
-import { widgetAtom } from "../attom/widget-attom";
+import { WidgetAuthForm } from "./widget-auth-form";
+import { screenAtom } from "../attom/widget-attom";
+import { WidgetErrorScreen } from "./widget-error-screen";
+import { WidgetLoadingScreen } from "./widget-loading-screen";
 
-export const WidgetView = () => {
-  const screen = useAtomValue(widgetAtom);
+interface Props {
+  organizationId: string | null;
+}
+export const WidgetView = ({ organizationId }: Props) => {
+  const screen = useAtomValue(screenAtom);
+
   const screenComponents = {
-    error: <p>todo:error</p>,
-    loading: <p>todo:loading</p>,
+    error: <WidgetErrorScreen />,
+    loading: <WidgetLoadingScreen organizationId={organizationId} />,
     selection: <p>todo:selection</p>,
     voice: <p>todo:voice</p>,
-    auth: <WidgetHeader />,
+    auth: <WidgetAuthForm />,
     inbox: <p>todo:inbox</p>,
     chat: <p>todo:chat</p>,
     contact: <p>todo:contact</p>,
   };
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
+    <main className="min-h-screen min-w-screen flex h-full w-full flex-col overflow-hidden">
       {screenComponents[screen]}
+      {organizationId}
     </main>
   );
 };

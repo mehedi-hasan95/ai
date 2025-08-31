@@ -16,15 +16,23 @@ import { Input } from "@workspace/ui/components/input";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { Doc } from "@workspace/backend/_generated/dataModel";
+import { WidgetChildrenScreen } from "./widget-children-screen";
+import { useAtomValue, useSetAtom } from "jotai";
+import {
+  contactSessionAtomFamily,
+  organizationIdAtom,
+} from "../attom/widget-attom";
 const formSchema = z.object({
   name: z.string({ message: "Name is required" }).min(1).max(10),
   email: z
     .string({ message: "Email is required" })
     .email({ message: "Add a valid email" }),
 });
-export const WidgetHeader = () => {
-  // todo: temp orgId
-  const organizationId = "123";
+export const WidgetAuthForm = () => {
+  const organizationId = useAtomValue(organizationIdAtom);
+  const setContactSessionId = useSetAtom(
+    contactSessionAtomFamily(organizationId || "")
+  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,25 +64,23 @@ export const WidgetHeader = () => {
       currentUrl: window.location.href,
     };
     try {
-      await createContactSession({
+      const contactSessonId = await createContactSession({
         ...values,
         organizationId,
         metadata,
       });
+      setContactSessionId(contactSessonId);
     } catch (error) {
       console.error("Failed to create session: ", error);
     }
   }
   return (
-    <div className="w-full space-y-5">
-      <div className="bg-gradient-to-r from-blue-600 to-blue-400">
-        <div className="px-6 py-10">
-          <h2 className="text-3xl font-bold text-white">Hello there 👋</h2>
-          <p className="text-white">What is in your mind 😃😃😃</p>
-        </div>
-      </div>
+    <WidgetChildrenScreen className="justify-start">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 px-6 w-full"
+        >
           <FormField
             control={form.control}
             name="name"
@@ -113,6 +119,6 @@ export const WidgetHeader = () => {
           </Button>
         </form>
       </Form>
-    </div>
+    </WidgetChildrenScreen>
   );
 };
