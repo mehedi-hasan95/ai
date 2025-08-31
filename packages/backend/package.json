@@ -13,6 +13,8 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "convex": "^1.25.4"
+    "@clerk/backend": "^2.10.1",
+    "convex": "^1.25.4",
+    "jotai": "^2.13.1"
   }
 }
