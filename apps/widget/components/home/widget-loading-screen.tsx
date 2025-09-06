@@ -21,7 +21,7 @@ export const WidgetLoadingScreen = ({
 }) => {
   const [step, setStep] = useState<InitStep>("org");
   const [sessionValid, setSessionValid] = useState(false);
-  console.log(sessionValid);
+
   const loadingMessage = useAtomValue(loadingMessageAtom);
   const setErrorMessage = useSetAtom(errorMessageAtom);
   const setLoadingMessage = useSetAtom(loadingMessageAtom);

@@ -4,6 +4,8 @@ import { WidgetAuthForm } from "./widget-auth-form";
 import { screenAtom } from "../attom/widget-attom";
 import { WidgetErrorScreen } from "./widget-error-screen";
 import { WidgetLoadingScreen } from "./widget-loading-screen";
+import { WidgetSelectionScreen } from "./widget-selection-screen";
+import { WidgetChatScreen } from "./widget-chat-screen";
 
 interface Props {
   organizationId: string | null;
@@ -14,17 +16,16 @@ export const WidgetView = ({ organizationId }: Props) => {
   const screenComponents = {
     error: <WidgetErrorScreen />,
     loading: <WidgetLoadingScreen organizationId={organizationId} />,
-    selection: <p>todo:selection</p>,
+    selection: <WidgetSelectionScreen />,
     voice: <p>todo:voice</p>,
     auth: <WidgetAuthForm />,
     inbox: <p>todo:inbox</p>,
-    chat: <p>todo:chat</p>,
+    chat: <WidgetChatScreen />,
     contact: <p>todo:contact</p>,
   };
   return (
     <main className="min-h-screen min-w-screen flex h-full w-full flex-col overflow-hidden">
       {screenComponents[screen]}
-      {organizationId}
     </main>
   );
 };
