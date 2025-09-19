@@ -12,6 +12,7 @@ import {
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { useState } from "react";
+import { WidgetFooter } from "./widget-footer";
 
 export const WidgetSelectionScreen = () => {
   const [isPending, setIsPending] = useState<boolean>(false);
@@ -49,17 +50,21 @@ export const WidgetSelectionScreen = () => {
     }
   };
   return (
-    <WidgetChildrenScreen className="items-start justify-start">
-      <Button
-        onClick={handleNewConversation}
-        className="h-16 w-full justify-between"
-        variant="outline"
-      >
-        <div className="flex items-center gap-x-2">
-          <MessageSquareTextIcon className="size-5" />
-        </div>
-        <ChevronRightIcon />
-      </Button>
-    </WidgetChildrenScreen>
+    <>
+      <WidgetChildrenScreen className="items-start justify-start">
+        <Button
+          onClick={handleNewConversation}
+          className="h-16 w-full justify-between"
+          variant="outline"
+          disabled={isPending}
+        >
+          <div className="flex items-center gap-x-2">
+            <MessageSquareTextIcon className="size-5" />
+          </div>
+          <ChevronRightIcon />
+        </Button>
+      </WidgetChildrenScreen>
+      <WidgetFooter />
+    </>
   );
 };

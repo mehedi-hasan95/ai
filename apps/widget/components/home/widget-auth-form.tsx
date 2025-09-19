@@ -21,7 +21,9 @@ import { useAtomValue, useSetAtom } from "jotai";
 import {
   contactSessionAtomFamily,
   organizationIdAtom,
+  screenAtom,
 } from "../attom/widget-attom";
+
 const formSchema = z.object({
   name: z.string({ message: "Name is required" }).min(1).max(10),
   email: z
@@ -29,6 +31,7 @@ const formSchema = z.object({
     .email({ message: "Add a valid email" }),
 });
 export const WidgetAuthForm = () => {
+  const setScreen = useSetAtom(screenAtom);
   const organizationId = useAtomValue(organizationIdAtom);
   const setContactSessionId = useSetAtom(
     contactSessionAtomFamily(organizationId || "")
@@ -70,6 +73,7 @@ export const WidgetAuthForm = () => {
         metadata,
       });
       setContactSessionId(contactSessonId);
+      setScreen("selection");
     } catch (error) {
       console.error("Failed to create session: ", error);
     }
