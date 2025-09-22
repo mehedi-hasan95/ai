@@ -11,7 +11,7 @@ export const useInfiniteScroll = ({
   loadMore,
   loadSize,
   status,
-  observerEnable,
+  observerEnable = true,
 }: infiniteScrollProps) => {
   const topElementRef = useRef<HTMLDivElement>(null);
   const handleLoadMore = useCallback(() => {
