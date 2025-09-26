@@ -39,6 +39,59 @@ export const getOne = query({
   },
 });
 
+// export const getMany = query({
+//   args: {
+//     contactSessionId: v.id("contactSessions"),
+//     paginationOpts: paginationOptsValidator,
+//   },
+//   handler: async (ctx, args) => {
+//     const contactSession = await ctx.db.get(args.contactSessionId);
+//     if (!contactSession || contactSession.expiresAt < Date.now()) {
+//       throw new ConvexError({
+//         code: "UNAUTHORIZED",
+//         message: "Invalid session",
+//       });
+//     }
+//     const conversation = await ctx.db
+//       .query("conversation")
+//       .withIndex("by_contact_session_id", (q) =>
+//         q.eq("contactSessionId", args.contactSessionId)
+//       )
+//       .order("desc")
+//       .paginate(args.paginationOpts);
+
+//     const conversationWithLastMessage = await Promise.all(
+//       conversation.page.map(async (conversation) => {
+//         let lastMessage: MessageDoc | null = null;
+
+//         const messages = await supportAgent.listMessages(ctx, {
+//           threadId: conversation.threadId,
+//           paginationOpts: { cursor: null, numItems: 1 },
+//         });
+
+//         if (
+//           messages.page.length > 0 &&
+//           messages.page[0]?.text?.trim() !== null
+//         ) {
+//           lastMessage = messages.page[0] ?? null;
+//         }
+//         return {
+//           _id: conversation._id,
+//           _creationTime: conversation._creationTime,
+//           status: conversation.status,
+//           organizationId: contactSession.organizationId,
+//           threadId: conversation.threadId,
+//           lastMessage,
+//         };
+//       })
+//     );
+//     return {
+//       ...conversation,
+//       page: conversationWithLastMessage,
+//     };
+//   },
+// });
+
 export const getMany = query({
   args: {
     contactSessionId: v.id("contactSessions"),
@@ -52,6 +105,7 @@ export const getMany = query({
         message: "Invalid session",
       });
     }
+
     const conversation = await ctx.db
       .query("conversation")
       .withIndex("by_contact_session_id", (q) =>
@@ -66,12 +120,13 @@ export const getMany = query({
 
         const messages = await supportAgent.listMessages(ctx, {
           threadId: conversation.threadId,
-          paginationOpts: { cursor: null, numItems: 1 },
+          paginationOpts: { cursor: null, numItems: 2 }, // fetch a few in case last one is empty
         });
 
-        if (messages.page.length > 0) {
-          lastMessage = messages.page[0] ?? null;
-        }
+        // Find the latest non-null message
+        lastMessage =
+          messages.page.find((m) => m?.text && m.text.trim() !== "") ?? null;
+
         return {
           _id: conversation._id,
           _creationTime: conversation._creationTime,
@@ -82,6 +137,7 @@ export const getMany = query({
         };
       })
     );
+
     return {
       ...conversation,
       page: conversationWithLastMessage,

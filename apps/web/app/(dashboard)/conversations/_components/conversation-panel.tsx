@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ConversationSkeleton } from "./conversation-skeleton";
+import { ConversationSkeleton } from "./loader/conversation-skeleton";
 
 export const ConversationPanel = () => {
   const pathname = usePathname();
@@ -140,7 +140,7 @@ export const ConversationPanel = () => {
                       </span>
                       <span className="ml-auto shrink-0 text-muted-foreground text-xs">
                         {formatDistanceToNow(
-                          new Date(conversation.contactSession._creationTime)
+                          new Date(conversation.lastMessage?._creationTime || 0)
                         )}
                       </span>
                     </div>
