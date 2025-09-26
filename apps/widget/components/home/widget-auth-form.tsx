@@ -25,7 +25,7 @@ import {
 } from "../attom/widget-attom";
 
 const formSchema = z.object({
-  name: z.string({ message: "Name is required" }).min(1).max(10),
+  name: z.string({ message: "Name is required" }).min(1).max(20),
   email: z
     .string({ message: "Email is required" })
     .email({ message: "Add a valid email" }),

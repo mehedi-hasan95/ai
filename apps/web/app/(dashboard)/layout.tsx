@@ -3,6 +3,7 @@ import { OgranizatinGuard } from "@/components/auth/organization-guard";
 import { SidebarProvider } from "@workspace/ui/components/sidebar";
 import { cookies } from "next/headers";
 import { DashboardSidebar } from "./_componets/dashboard-sidebar";
+import { Provider } from "jotai";
 
 const DashboarLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = await cookies();
@@ -11,10 +12,12 @@ const DashboarLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthGuard>
       <OgranizatinGuard>
-        <SidebarProvider defaultOpen={sidebarOpen}>
-          <DashboardSidebar />
-          <main className="flex flex-col lg:flex-1">{children}</main>
-        </SidebarProvider>
+        <Provider>
+          <SidebarProvider defaultOpen={sidebarOpen}>
+            <DashboardSidebar />
+            <main className="flex flex-col lg:flex-1">{children}</main>
+          </SidebarProvider>
+        </Provider>
       </OgranizatinGuard>
     </AuthGuard>
   );

@@ -67,18 +67,12 @@ export const WidgetChatScreen = () => {
     { initialNumItems: 10 }
   );
 
-  const {
-    canLoadMore,
-    handleLoadMore,
-    isExhausted,
-    isLoadingFirstPage,
-    isLoadingMore,
-    topElementRef,
-  } = useInfiniteScroll({
-    loadMore: messages.loadMore,
-    loadSize: 10,
-    status: messages.status,
-  });
+  const { canLoadMore, handleLoadMore, isLoadingMore, topElementRef } =
+    useInfiniteScroll({
+      loadMore: messages.loadMore,
+      loadSize: 10,
+      status: messages.status,
+    });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

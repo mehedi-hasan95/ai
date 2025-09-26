@@ -53,12 +53,12 @@ export const WidgetInboxScreen = () => {
       </div>
       <div className="flex flex-1 flex-col gap-y-4 p-4 w-full overflow-y-auto">
         {conversation.results.length > 0 &&
-          conversation?.results.map((c) => (
+          conversation?.results.map((conv) => (
             <Button
               className="h-20 w-full justify-between"
-              key={c._id}
+              key={conv._id}
               onClick={() => {
-                setConversationId(c._id);
+                setConversationId(conv._id);
                 setScreen("chat");
               }}
               variant="outline"
@@ -67,13 +67,15 @@ export const WidgetInboxScreen = () => {
                 <div className="flex w-full items-center justify-between gap-x-2">
                   <p className="text-muted-foreground text-sm">Chat</p>
                   <p className="text-muted-foreground text-xs">
-                    {formatDistanceToNow(new Date(c._creationTime))}
+                    {formatDistanceToNow(
+                      new Date(conv.lastMessage?._creationTime || 0)
+                    )}
                   </p>
                 </div>
                 <div className="flex w-full items-center justify-between gap-x-2">
-                  <p className="truncate text-xs">{c.lastMessage?.text}</p>
+                  <p className="truncate text-xs">{conv.lastMessage?.text}</p>
                   <ConversationStatusIcon
-                    status={c.status}
+                    status={conv.status}
                     className="shrink-0"
                   />
                 </div>

@@ -3,6 +3,8 @@ import { action, query } from "../_generated/server.js";
 import { internal } from "../_generated/api.js";
 import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { paginationOptsValidator } from "convex/server";
+import { resolveConversation } from "../system/tools/resolveConversation.js";
+import { escalateConversation } from "../system/tools/escalateConversation.js";
 
 export const create = action({
   args: {
@@ -46,11 +48,25 @@ export const create = action({
     }
 
     // todo: implement subscription
-    await supportAgent.generateText(
-      ctx,
-      { threadId: args.theradId },
-      { prompt: args.prompt }
-    );
+    const shouldTriggerAgent = conversation.status === "unresolved";
+    if (shouldTriggerAgent) {
+      await supportAgent.generateText(
+        ctx,
+        { threadId: args.theradId },
+        {
+          prompt: args.prompt,
+          tools: {
+            resolveConversation,
+            escalateConversation,
+          },
+        }
+      );
+    } else {
+      await supportAgent.saveMessage(ctx, {
+        threadId: args.theradId,
+        prompt: args.prompt,
+      });
+    }
   },
 });
 
