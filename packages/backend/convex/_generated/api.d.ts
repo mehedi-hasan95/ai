@@ -10,16 +10,20 @@
 
 import type * as private_conversation from "../private/conversation.js";
 import type * as private_files from "../private/files.js";
+import type * as private_lib_extractTextContent from "../private/lib/extractTextContent.js";
 import type * as private_messages from "../private/messages.js";
 import type * as public_contactSessions from "../public/contactSessions.js";
 import type * as public_conversation from "../public/conversation.js";
 import type * as public_messages from "../public/messages.js";
 import type * as public_organizations from "../public/organizations.js";
 import type * as system_ai_agents_supportAgent from "../system/ai/agents/supportAgent.js";
+import type * as system_ai_rag from "../system/ai/rag.js";
 import type * as system_contactSessions from "../system/contactSessions.js";
 import type * as system_conversations from "../system/conversations.js";
+import type * as system_tools_constants from "../system/tools/constants.js";
 import type * as system_tools_escalateConversation from "../system/tools/escalateConversation.js";
 import type * as system_tools_resolveConversation from "../system/tools/resolveConversation.js";
+import type * as system_tools_search from "../system/tools/search.js";
 import type * as users from "../users.js";
 
 import type {
@@ -39,16 +43,20 @@ import type {
 declare const fullApi: ApiFromModules<{
   "private/conversation": typeof private_conversation;
   "private/files": typeof private_files;
+  "private/lib/extractTextContent": typeof private_lib_extractTextContent;
   "private/messages": typeof private_messages;
   "public/contactSessions": typeof public_contactSessions;
   "public/conversation": typeof public_conversation;
   "public/messages": typeof public_messages;
   "public/organizations": typeof public_organizations;
   "system/ai/agents/supportAgent": typeof system_ai_agents_supportAgent;
+  "system/ai/rag": typeof system_ai_rag;
   "system/contactSessions": typeof system_contactSessions;
   "system/conversations": typeof system_conversations;
+  "system/tools/constants": typeof system_tools_constants;
   "system/tools/escalateConversation": typeof system_tools_escalateConversation;
   "system/tools/resolveConversation": typeof system_tools_resolveConversation;
+  "system/tools/search": typeof system_tools_search;
   users: typeof users;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
