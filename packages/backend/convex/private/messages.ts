@@ -6,6 +6,7 @@ import { paginationOptsValidator } from "convex/server";
 import { saveMessage } from "@convex-dev/agent";
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
+import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from "../system/tools/constants.js";
 
 export const create = mutation({
   args: {
@@ -132,8 +133,7 @@ export const enhanceResponse = action({
       messages: [
         {
           role: "assistant",
-          content:
-            "Enhance the operator's message to be more professional, clear, and helpful while maintaining their intent and key information. Write as the assistant. It will be short and concise.",
+          content: OPERATOR_MESSAGE_ENHANCEMENT_PROMPT,
         },
         {
           role: "user",
