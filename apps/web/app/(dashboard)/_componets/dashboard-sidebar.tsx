@@ -84,7 +84,7 @@ export const DashboardSidebar = () => {
                       organizationPreview:
                         "group-data-[collapsible=icon]:justify-center! gap-2!",
                       organizationPreviewTextContainer:
-                        "group-data-[collapsible=icon]:hidden! text-xs! font-medium! text-sidebar-foreground!",
+                        "group-data-[collapsible=icon]:hidden! text-xs! font-medium!",
                       organizationSwitcherTriggerIcon:
                         "group-data-[collapsible=icon]:hidden! ml-auto! text-sidebar-foreground!",
                     },
