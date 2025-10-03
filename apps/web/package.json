@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.31.1",
+    "@clerk/themes": "^2.4.23",
     "@convex-dev/agent": "0.2.7",
     "@hookform/resolvers": "^5.2.1",
     "@workspace/backend": "workspace:*",

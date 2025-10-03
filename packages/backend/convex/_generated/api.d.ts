@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as http from "../http.js";
 import type * as private_conversation from "../private/conversation.js";
 import type * as private_files from "../private/files.js";
 import type * as private_lib_extractTextContent from "../private/lib/extractTextContent.js";
@@ -20,6 +21,7 @@ import type * as system_ai_agents_supportAgent from "../system/ai/agents/support
 import type * as system_ai_rag from "../system/ai/rag.js";
 import type * as system_contactSessions from "../system/contactSessions.js";
 import type * as system_conversations from "../system/conversations.js";
+import type * as system_subscriptions from "../system/subscriptions.js";
 import type * as system_tools_constants from "../system/tools/constants.js";
 import type * as system_tools_escalateConversation from "../system/tools/escalateConversation.js";
 import type * as system_tools_resolveConversation from "../system/tools/resolveConversation.js";
@@ -41,6 +43,7 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  http: typeof http;
   "private/conversation": typeof private_conversation;
   "private/files": typeof private_files;
   "private/lib/extractTextContent": typeof private_lib_extractTextContent;
@@ -53,6 +56,7 @@ declare const fullApi: ApiFromModules<{
   "system/ai/rag": typeof system_ai_rag;
   "system/contactSessions": typeof system_contactSessions;
   "system/conversations": typeof system_conversations;
+  "system/subscriptions": typeof system_subscriptions;
   "system/tools/constants": typeof system_tools_constants;
   "system/tools/escalateConversation": typeof system_tools_escalateConversation;
   "system/tools/resolveConversation": typeof system_tools_resolveConversation;
