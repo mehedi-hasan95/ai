@@ -1,5 +1,6 @@
 "use client";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+
 import {
   Sidebar,
   SidebarContent,

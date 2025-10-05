@@ -61,9 +61,15 @@ export const UploadDialog = ({ onOpenChange, open, onFileUploaded }: Props) => {
       onFileUploaded?.();
       handleCancel();
       toast(`${filename} upload successfully`);
-    } catch (error) {
-      console.error(error);
-      toast("Can't upload this file");
+    } catch (error: any) {
+      if (error?.data?.code === "UNAUTHORIZE") {
+        toast.error(error?.data?.message);
+      } else if (error?.data?.code === "BAD_REQUEST") {
+        toast.error(error?.data?.message);
+      } else {
+        toast.error("Can't upload this file. Please try again.");
+      }
+      console.error("Upload file error:", error);
     } finally {
       setIsUploading(false);
     }
