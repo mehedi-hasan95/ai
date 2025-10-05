@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "../_generated/server.js";
 
-const CONTACT_SESSION_MS = 24 * 60 * 60 * 1000;
+export const CONTACT_SESSION_MS = 24 * 60 * 60 * 1000;
 export const createUser = mutation({
   args: {
     name: v.string(),

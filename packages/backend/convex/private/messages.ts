@@ -128,6 +128,17 @@ export const enhanceResponse = action({
         message: "Organization not found",
       });
     }
+
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrganizationId,
+      { organizationId: identity.orgId as string }
+    );
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "You haven't pro subscription yet!!",
+      });
+    }
     const { text } = await generateText({
       model: google("gemini-2.5-flash"),
       messages: [

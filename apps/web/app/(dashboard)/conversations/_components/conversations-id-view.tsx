@@ -33,6 +33,7 @@ import { useState } from "react";
 import { useInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
 import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 import { ConversationIdSkeleton } from "./loader/conversation-id-skeleton";
+import { toast } from "sonner";
 const formSchema = z.object({
   message: z.string().min(2, {
     message: "message must be at least 2 characters.",
@@ -89,8 +90,15 @@ export const ConversationsIdViews = ({
     try {
       const response = await enhanceMessage({ prompt: enhanceValue });
       form.setValue("message", response);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      if (error?.data?.code === "UNAUTHORIZE") {
+        toast.error(error?.data?.message);
+      } else if (error?.data?.code === "BAD_REQUEST") {
+        toast.error(error?.data?.message);
+      } else {
+        toast.error("Failed to enhance message. Please try again.");
+      }
+      console.error("Enhance message error:", error);
     } finally {
       setIsEnhancing(false);
     }

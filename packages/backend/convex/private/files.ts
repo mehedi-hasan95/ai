@@ -12,6 +12,7 @@ import rag from "../system/ai/rag.js";
 import { Id } from "../_generated/dataModel.js";
 import { extractTextContent } from "@workspace/backend/private/lib/extractTextContent.js";
 import { paginationOptsValidator } from "convex/server";
+import { internal } from "../_generated/api.js";
 
 const guessMimeType = (filename: string, bytes: ArrayBuffer): string => {
   return (
@@ -41,6 +42,17 @@ export const addFile = action({
       throw new ConvexError({
         code: "UNAUTHORIZED",
         message: "Organization not found",
+      });
+    }
+
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrganizationId,
+      { organizationId: identity.orgId as string }
+    );
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "You haven't pro subscription yet!!",
       });
     }
 
