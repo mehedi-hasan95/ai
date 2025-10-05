@@ -20,6 +20,7 @@ import {
   LibraryBigIcon,
   Mic,
   PaletteIcon,
+  Settings,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -55,6 +56,13 @@ const configruationItems = [
     icon: Mic,
   },
 ];
+const settingsItems = [
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: Settings,
+  },
+];
 const accountItems = [
   { title: "Plans & Billing", url: "/billing", icon: CreditCard },
 ];
@@ -88,6 +96,8 @@ export const DashboardSidebar = () => {
                         "group-data-[collapsible=icon]:hidden! text-xs! font-medium!",
                       organizationSwitcherTriggerIcon:
                         "group-data-[collapsible=icon]:hidden! ml-auto! text-sidebar-foreground!",
+                      organizationPreviewMainIdentifier:
+                        "dark:text-white! text-black!",
                     },
                   }}
                 />
@@ -151,6 +161,32 @@ export const DashboardSidebar = () => {
             <SidebarGroupLabel>Accounts</SidebarGroupLabel>
             <SidebarMenu>
               {accountItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive(item.url)}
+                    tooltip={item.title}
+                    className={cn(
+                      "hover:bg-blue-600/90! hover:text-white",
+                      isActive(item.url) &&
+                        "bg-blue-600! text-white! hover:bg-blue-600/90!"
+                    )}
+                  >
+                    <Link href={item.url}>
+                      <item.icon className="size-4" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+
+          {/* Settings  */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Settings</SidebarGroupLabel>
+            <SidebarMenu>
+              {settingsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
